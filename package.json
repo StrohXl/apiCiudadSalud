@@ -9,10 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdi/font": "^7.1.96",
+    "@mdi/js": "^7.1.96",
+    "@mdi/react": "^1.6.1",
+    "antd": "^5.0.5",
+    "axios": "^1.2.1",
+    "cookies": "^0.8.0",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
+    "jose": "^4.11.1",
+    "js-cookie": "^3.0.1",
+    "local-storage": "^2.0.0",
     "next": "13.0.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-highlight-words": "^0.18.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4"
   }
 }
