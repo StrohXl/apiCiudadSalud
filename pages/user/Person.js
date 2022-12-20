@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Icon from '@mdi/react';
-import { mdiAccount } from '@mdi/js';
+import { mdiAccountPlus  } from '@mdi/js';
 import ModalPersona from '../../components/Person/ModalPerson';
 import ModalGroup from '../../components/Group/ModalGroup';
 import CardsPerson from '../../components/Person/CardsPerson';
+import { personCreateNotification, personDeleteNotification, personEditNotification } from '../../components/Person/NotificationPerson';
+
 const Personas = () => {
+  
   const [data, setData] = useState([])
   const [open, setOpen] = useState(false)
   const [openGrupoFamiliar, setOpenGrupoFamiliar] = useState(false)
@@ -27,6 +30,7 @@ const Personas = () => {
       try {
         await axios.post('http://localhost:8080/person', datos)
         CargarDatos()
+        personCreateNotification()
       } catch (error) {
         console.log(error)
       }
@@ -35,6 +39,7 @@ const Personas = () => {
       try {
         await axios.put(`http://localhost:8080/person/${item.id}`, datos)
         CargarDatos()
+        personEditNotification()
       } catch (error) {
         console.log(error)
       }
@@ -69,8 +74,10 @@ const Personas = () => {
     try {
       await axios.delete('http://localhost:8080/person/' + id)
       CargarDatos()
+      personDeleteNotification(id)
     } catch (error) {
       console.log(error)
+      personDeleteNotification(id)
     }
 
   }
@@ -97,7 +104,7 @@ const Personas = () => {
       <ModalGroup open={openGrupoFamiliar} onCancel={CancelGrupoFamiliar} finish={GuardarGrupoFamiliar} item={item} />
       <Button className='mt-6 ml-6' onClick={OpenModal}>
         Agregar Persona
-        <Icon path={mdiAccount} className='inline ml-1 mb-1' size={0.8} />
+        <Icon path={mdiAccountPlus } className='inline ml-1 mb-1' size={0.8} />
         </Button>
         <CardsPerson vacio={vacio} data={data} OpenModalGrupoFamiliar={OpenModalGrupoFamiliar} Editar={Editar} Eliminar={Eliminar} />
     </div>

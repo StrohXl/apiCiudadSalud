@@ -23,7 +23,7 @@ const CardsHome = ({ vacio, data, openModalJefe, Editar, Eliminar }) => {
                   <Button  onClick={() => openModalJefe(index)} className='mr-3'>Jefe Familiar</Button>
                   <div>
                     <Button  onClick={() => Editar(index)} className='mr-3'>Editar</Button>
-                    <Button  onClick={() => Eliminar(item.id)}>Eliminar</Button>
+                    <Button  onClick={() => Eliminar(item.id, index)}>Eliminar</Button>
                   </div>
                 </div>
               </Card>

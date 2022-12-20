@@ -2,7 +2,9 @@ import '../styles/globals.css'
 import { Layout } from 'antd';
 import 'antd/dist/reset.css';
 import { useRouter } from 'next/router';
+import { FloatButton } from 'antd';
 import Nav from '../components/Nav';
+import {ArrowUpOutlined} from "@ant-design/icons"
 const { Header, Content } = Layout;
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -17,6 +19,7 @@ function MyApp({ Component, pageProps }) {
         <Content>
           <Component {...pageProps} />
         </Content>
+        <FloatButton.BackTop icon={<ArrowUpOutlined />} type={'primary'} />
 
       </div>
 

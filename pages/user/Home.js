@@ -5,8 +5,10 @@ import axios from 'axios';
 import ModalHomes from '../../components/Home/ModalHomes';
 import ModalJefe from '../../components/Chief/ModalChief';
 import Icon from '@mdi/react';
-import { mdiHome } from '@mdi/js';
+import { mdiHomePlus  } from '@mdi/js';
 import CardsHome from '../../components/Home/CardsHome';
+import { createHomeNotification, editHomeNotification, deleteHomeNotification  } from '../../components/Home/NotificationsHomes';
+import { createChiefNotification } from '../../components/Chief/NotificationsChief';
 const Casas = () => {
   const [data, setData] = useState([])
   const [open, setOpen] = useState(false)
@@ -14,6 +16,7 @@ const Casas = () => {
   const [item, setItem] = useState(null)
   const [vacio, setVacio] = useState(false)
   const router = useRouter()
+
   const openModal = () => {
     setItem(null)
     setOpen(true)
@@ -30,13 +33,16 @@ const Casas = () => {
     if (item === null) {
       try {
         await axios.post('http://localhost:8080/home', datos)
+        createHomeNotification(datos)
       } catch (error) {
         console.log(error)
       }
     }
     else {
       try {
+   
         await axios.put(`http://localhost:8080/home/${item.id}`, datos)
+        editHomeNotification(datos)
       } catch (error) {
         console.log(error)
       }
@@ -53,6 +59,7 @@ const Casas = () => {
      try {
       await axios.post('http://localhost:8080/family-chief', datos)
       setOpenJefe(false)
+      createChiefNotification(datos)
      } catch (error) {
       console.log(error)
      }
@@ -61,16 +68,15 @@ const Casas = () => {
     setOpen(true)
     setItem(data[index])
   }
-  const Eliminar = async (id) => {
+  const Eliminar = async (id, index) => {
     try {
      await axios.delete('http://localhost:8080/home/' + id)
-      
-      CargarDatos()
-
+     deleteHomeNotification( id)
     } catch (error) {
+      console.log('no se elminio')
       console.log(error)
     }
-
+    CargarDatos()
   }
   const CargarDatos = async () => {
     try {
@@ -95,7 +101,7 @@ const Casas = () => {
       <ModalJefe open={openJefe} onCancel={CancelJefe} finish={GuardarJefe} item={item} />
       <Button className='mt-6 ml-6' onClick={openModal}>
         Agregar Casa
-        <Icon path={mdiHome} className='inline ml-1 mb-1' size={0.8} />
+        <Icon path={mdiHomePlus } className='inline ml-1 mb-1' size={0.8} />
       </Button>
       <CardsHome vacio={vacio} data={data} openModalJefe={openModalJefe} Editar={Editar} Eliminar={Eliminar} />
 

@@ -2,23 +2,23 @@ import { Form, Select, InputNumber  } from "antd";
 const FormHome = ({data,form,onChange}) => {
     const optionsStreet = [
         {
-            value: 'Calle 1',
+            value: '1',
             label: 'Calle 1'
         },
         {
-            value: 'Calle 2',
+            value: '2',
             label: 'Calle 2'
         },
         {
-            value: 'Calle 3',
+            value: '3',
             label: 'Calle 3'
         },
         {
-            value: 'Calle 4',
+            value: '4',
             label: 'Calle 4'
         },
         {
-            value: 'Calle 5',
+            value: '5',
             label: 'Calle 5'
         },
 
