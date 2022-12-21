@@ -22,6 +22,7 @@ const TablaHome = ({homeId}) => {
 
     const CargarDatos = async () => {
         const auxdata = await axios.get('http://localhost:8080/home')
+        console.log(auxdata)
         auxdata.data.map((item)=>{
             item.key = item.id
         })

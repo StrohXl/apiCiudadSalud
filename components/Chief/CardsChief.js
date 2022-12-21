@@ -9,6 +9,12 @@ const CardsChief = ({vacio, data, Eliminar}) => {
               No hay Jefes
             </div>
           ) :
+          data.length == 0?
+          (
+            <div className='text-3xl '>
+              No hay Resultados
+            </div>
+          ):
           data.map(function (item, index) {
             return (
               <Col key={item.id} className='mb-6 mx-3'>

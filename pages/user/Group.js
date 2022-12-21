@@ -6,13 +6,17 @@ import ModalGroup from '../../components/Group/ModalGroup';
 import Icon from '@mdi/react';
 import {mdiAccountGroup} from '@mdi/js'
 import CardsGroup from '../../components/Group/CardsGroup';
+import SearchGroup from '../../components/Group/SearchGroup';
 const Grupo = () => {
   const [data, setData] = useState([])
+  const [searchN, setSearchN] = useState([])
+  const [searchNC, setSearchNC] = useState([])
+  const [searchR, setSearchR] = useState([])
   const [open, setOpen] = useState(false)
   const [item, setItem] = useState(null)
   const [vacio, setVacio] = useState(false)
   const router = useRouter()
-
+  let Resultado = []
   const Open = () => {
     setItem(null)
     setOpen(true)
@@ -69,6 +73,23 @@ const Grupo = () => {
 
     }
   }
+  const onSearchR=(valor)=>{
+    setSearchR(valor)
+  }
+  const onSearchN=(valor)=>{
+    setSearchN(valor)
+  }
+  const onSearchNC=(valor)=>{
+    setSearchNC(valor)
+  }
+  
+  !searchN && !searchNC && !searchR ?
+    Resultado = data :
+    Resultado = data.filter((busqueda) =>
+      busqueda.person.name.toString().toLowerCase().includes(searchN.toString().toLowerCase()) &&
+      busqueda.chief.home.n_home.toString().toLowerCase().includes(searchNC.toString().toLowerCase()) &&
+      busqueda.relationship.toString().toLowerCase().includes(searchR.toString().toLowerCase())
+    )
   useEffect(() => { CargarDatos() }, [])
   return (
     <div className='min-h-screen'>
@@ -78,7 +99,8 @@ const Grupo = () => {
         <Icon path={mdiAccountGroup} className='inline ml-1 mb-1' size={0.8} />  
         
         </Button>
-        <CardsGroup vacio={vacio} data={data} Eliminar={Eliminar} />
+        <SearchGroup onSearchR={onSearchR} onSearchN={onSearchN} onSearchNC={onSearchNC}/>
+        <CardsGroup vacio={vacio} data={Resultado} Eliminar={Eliminar} />
 
     </div>
   );

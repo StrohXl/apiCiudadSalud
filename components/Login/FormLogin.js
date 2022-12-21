@@ -7,7 +7,7 @@ const FormLogin = ({ onFinish }) => {
     const [form] = Form.useForm()
     return (
         <div className='w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6'>
-            <div className='h-40 rounded-tl-xl rounded-tr-xl bg-blue-500 flex items-center justify-center'>
+            <div className='h-40 rounded-tl-xl rounded-tr-xl bg-slate-800 flex items-center justify-center'>
                 <Title ><span className='text-white font-'>Ciudad Salud</span></Title>
             </div>
             <Form
@@ -51,7 +51,7 @@ const FormLogin = ({ onFinish }) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button className='bg-blue-500 w-full ' type="primary" htmlType="submit" >
+                    <Button className='bg-slate-800 w-full hover:bg-white ' type="primary" htmlType="submit" >
 
                         <Icon
                             className='inline mr-2'
