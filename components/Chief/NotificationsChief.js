@@ -1,6 +1,5 @@
 import { notification } from 'antd';
-export const createChiefNotification  = async (datos) => {
-
+export const createChiefNotification  =  () => {
     notification.success({
         message: "Jefe Familiar Creado Exitosamente",
 

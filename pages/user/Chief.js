@@ -7,6 +7,7 @@ import CardsChief from '../../components/Chief/CardsChief';
 import Icon from '@mdi/react';
 import { mdiAccountGroupOutline } from '@mdi/js'
 import SearchChief from '../../components/Chief/SearchChief';
+import { createChiefNotification } from '../../components/Chief/NotificationsChief';
 const Jefes = () => {
   const [data, setData] = useState([])
   const [searchN, setSearchN] = useState([])
@@ -26,6 +27,7 @@ const Jefes = () => {
     try {
       await axios.post('http://localhost:8080/family-chief', datos)
       CargarDatos()
+      createChiefNotification()
       setOpen(false)
     } catch (error) {
       console.log(error)
