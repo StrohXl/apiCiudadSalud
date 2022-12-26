@@ -68,22 +68,21 @@ const index = ({ onSearchN, onSearchS, onSearchST }) => {
         },
 
     ]
-
     return (
-        <div className="flex gap-20 mx-50 mt-10 justify-center">
+        <div className="flex gap-10 px-12 mt-10 justify-center">
 
 
             <div className="w-96 text-center">
                 <Title level={3}>Numero de la casa:</Title>
-                <Search placeholder="Escriba el numero de la Casa" allowClear onSearch={onSearchN} />
+                <Search  placeholder="Escriba el numero de la Casa" allowClear onSearch={onSearchN} />
             </div>
             <div className="w-96 text-center ">
-                <Title level={3}>Letra de la casa:</Title>
-                <Select className="w-96" defaultValue={''} placeholder='Seleccione la letra' options={optionsSquare} onChange={onSearchS} />
+                <Title level={3}>Cuadra de la casa:</Title>
+                <Search  allowClear  placeholder='Escriba la cuadra'  onSearch={onSearchS} />
             </div>
             <div className="w-96 text-center">
                 <Title level={3}>Calle de la casa:</Title>
-                <Select className="w-96" defaultValue={''} placeholder='Seleccione la calle' options={optionsStreet} onChange={onSearchST} />
+                <Search  allowClear   placeholder='Escriba la calle' onSearch={onSearchST} />
             </div>
         </div>
     );

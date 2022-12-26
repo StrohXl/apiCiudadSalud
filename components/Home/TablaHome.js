@@ -4,16 +4,16 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
 
-const TablaHome = ({homeId}) => {
+const TablaHome = ({ homeId }) => {
     const [data, setData] = useState(null)
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
-    const rowSelection ={
+    const rowSelection = {
         type: 'radio',
-        onSelect: (record)=>{
+        onSelect: (record) => {
             homeId(record)
-          
+
         }
     }
     const pagination = {
@@ -23,7 +23,7 @@ const TablaHome = ({homeId}) => {
     const CargarDatos = async () => {
         const auxdata = await axios.get('http://localhost:8080/home')
         console.log(auxdata)
-        auxdata.data.map((item)=>{
+        auxdata.data.map((item) => {
             item.key = item.id
         })
         setData(auxdata.data)
@@ -40,12 +40,14 @@ const TablaHome = ({homeId}) => {
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div
+               
                 style={{
                     padding: 8,
                 }}
                 onKeyDown={(e) => e.stopPropagation()}
             >
                 <Input
+
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
@@ -57,30 +59,28 @@ const TablaHome = ({homeId}) => {
                     }}
                 />
                 <Space>
-                    <Button
-                        className='bg-blue-500'
-                        type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Buscar
-                    </Button>
+              
+                        <Button
+                            className='text-lg leading-none'
+                            type="primary"
+                            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                            icon={(<span className=' pr-1'><SearchOutlined /></span>)}
+                            
+                     
+                        >
+                            Buscar
+                        </Button>
+       
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
+                        className='text-lg leading-none'
+                   
                     >
                         Resetear
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none inlin'
                         onClick={() => {
                             confirm({
                                 closeDropdown: false,
@@ -93,7 +93,7 @@ const TablaHome = ({homeId}) => {
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none'
                         onClick={() => {
                             close();
                         }}
@@ -105,6 +105,7 @@ const TablaHome = ({homeId}) => {
         ),
         filterIcon: (filtered) => (
             <SearchOutlined
+                className='text-lg leading-none'
                 style={{
                     color: filtered ? '#1890ff' : undefined,
                 }}
@@ -141,10 +142,10 @@ const TablaHome = ({homeId}) => {
             ...getColumnSearchProps('n_home'),
         },
         {
-            title: 'Letra',
+            title: 'Cuadra',
             dataIndex: 'square',
             key: 'square',
-            width: '20%',
+            width: '30%',
             ...getColumnSearchProps('square'),
         },
         {
@@ -152,8 +153,7 @@ const TablaHome = ({homeId}) => {
             dataIndex: 'street',
             key: 'street',
             ...getColumnSearchProps('street'),
-            sorter: (a, b) => a.street.length - b.street.length,
-            sortDirections: ['descend', 'ascend'],
+     
         },
     ];
     useEffect(() => {
@@ -161,7 +161,7 @@ const TablaHome = ({homeId}) => {
     }, [])
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={pagination} rowSelection={rowSelection}/>
+            <Table columns={columns} dataSource={data} pagination={pagination} rowSelection={rowSelection} />
 
         </div>
 

@@ -9,7 +9,7 @@ import Icon from '@mdi/react';
 import { mdiHomePlus } from '@mdi/js';
 import CardsHome from '../../components/Home/CardsHome';
 import { createHomeNotification, editHomeNotification, deleteHomeNotification } from '../../components/Home/NotificationsHomes';
-import { createChiefNotification } from '../../components/Chief/NotificationsChief';
+import { createChiefNotification, createChiefErrorNotification } from '../../components/Chief/NotificationsChief';
 
 const Casas = () => {
   const [data, setData] = useState([])
@@ -62,13 +62,26 @@ const Casas = () => {
     setItem(null)
   }
   const GuardarJefe = async (datos) => {
-    try {
-      await axios.post('http://localhost:8080/family-chief', datos)
-      setOpenJefe(false)
-      createChiefNotification(datos)
-    } catch (error) {
-      console.log(error)
+    const auxData = await axios.get('http://localhost:8080/family-chief')
+    const filtrado = auxData.data.filter((b) => b.person.id == datos.person)
+    if (filtrado != 0) {
+      createChiefErrorNotification()
     }
+    else{
+      try {
+        await axios.post('http://localhost:8080/family-chief', datos)
+        setOpenJefe(false)
+        setOpen(false)
+        setItem(null)
+        CargarDatos()
+        createChiefNotification()
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+  
+
   }
   const Editar = async (index) => {
     setOpen(true)
@@ -113,10 +126,10 @@ const Casas = () => {
   !searchN && !searchS && !searchST ?
     resultados = data :
     resultados = data.filter((busqueda) =>
-      busqueda.n_home.toString().toLowerCase().includes(searchN.toString().toLowerCase())&&
-      busqueda.square.toString().toLowerCase().includes(searchS.toString().toLowerCase())  &&
-      busqueda.street.toString().toLowerCase().includes(searchST.toString().toLowerCase()) 
-      )
+      busqueda.n_home.toString().toLowerCase().includes(searchN.toString().toLowerCase()) &&
+      busqueda.square.toString().toLowerCase().includes(searchS.toString().toLowerCase()) &&
+      busqueda.street.toString().toLowerCase().includes(searchST.toString().toLowerCase())
+    )
 
   useEffect(() => { CargarDatos() }, [])
   return (

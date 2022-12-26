@@ -1,7 +1,7 @@
-import { Button, Row, Col, Card } from 'antd';
+import { Button, Row, Col, Card, Popconfirm } from 'antd';
 
 
-const CardsGroup = ({ vacio, data, Eliminar }) => {
+const CardsGroup = ({ vacio, data, Eliminar,Editar }) => {
   return (
     <Row className='mt-6 flex justify-around'>
       {vacio ?
@@ -24,7 +24,15 @@ const CardsGroup = ({ vacio, data, Eliminar }) => {
                 <div>Nombre del jefe familiar: <span className='font-bold'>{item.chief.person.name}</span></div>
                 <div>Numero del jefe familiar: <span className='font-bold'>{item.chief.numberPhone}</span></div>
                 <div className='text-end mt-3'>
-                  <Button onClick={() => Eliminar(item.id)}>Eliminar</Button>
+                <Popconfirm
+                      title='Estas seguro que deseas Eliminar?'
+                      onConfirm={() => Eliminar(item.id)}
+                      okText='Eliminar'
+                      cancelText='Cancelar'
+                      >
+                      <Button >Eliminar</Button>
+                      </Popconfirm>
+                      <Button className='ml-4' onClick={()=> Editar(index)} >Editar</Button>
                 </div>
               </Card>
             </Col>

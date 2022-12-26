@@ -12,11 +12,11 @@ function MyApp({ Component, pageProps }) {
 
       <div>
         {router.pathname == '/'? '': (
-            <Header>
+            <Header className='flex justify-end items-center'>
             <Nav />
           </Header>
         )}
-        <Content>
+        <Content >
           <Component {...pageProps} />
         </Content>
         <FloatButton.BackTop icon={<ArrowUpOutlined />} type={'primary'} />

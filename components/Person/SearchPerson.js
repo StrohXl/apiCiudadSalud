@@ -3,7 +3,7 @@ const {Title} = Typography
 const {Search} = Input
 const SearchPerson = ({onSearchN, onSearchA, onSearchC}) => {
     return (
-        <div className="flex gap-20 mx-50 mt-10 justify-center">
+        <div className="flex gap-10 px-12 mt-10 justify-center">
         <div className="w-96 text-center">
             <Title level={3}>Nombre:</Title>
             <Search placeholder="Escriba el nombre de la persona " allowClear onSearch={onSearchN} />

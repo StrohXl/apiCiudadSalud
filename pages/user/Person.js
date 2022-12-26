@@ -9,6 +9,7 @@ import ModalGroup from '../../components/Group/ModalGroup';
 import CardsPerson from '../../components/Person/CardsPerson';
 import { personCreateNotification, personDeleteNotification, personEditNotification } from '../../components/Person/NotificationPerson';
 import SearchPerson from '../../components/Person/SearchPerson';
+import { createGroupErrorNotification, createGroupNotification } from '../../components/Group/NotificationsGroup';
 
 const Personas = () => {
 
@@ -63,13 +64,24 @@ const Personas = () => {
     setItem(null)
   }
   const GuardarGrupoFamiliar = async (datos) => {
-    try {
-      await axios.post('http://localhost:8080/family-group', datos)
-      setOpenGrupoFamiliar(false)
-      setItem(null)
-    } catch (error) {
-      console.log(error)
+    const group = await axios.get('http://localhost:8080/family-group')
+    const filter = group.data.filter((b) =>
+      b.person.id == datos.person
+    )
+    if (filter.length != 0) {
+      createGroupErrorNotification()
     }
+    else {
+      try {
+        await axios.post('http://localhost:8080/family-group', datos)
+        setOpenGrupoFamiliar(false)
+        createGroupNotification()
+        setItem(null)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
   }
   const Editar = async (index) => {
     setOpen(true)
@@ -102,24 +114,24 @@ const Personas = () => {
       console.log(error)
     }
   }
-  const onSearchA =(valor)=>{
+  const onSearchA = (valor) => {
     setSearchA(valor)
   }
-  const onSearchN =(valor)=>{
+  const onSearchN = (valor) => {
     setSearchN(valor)
   }
-  const onSearchC =(valor)=>{
+  const onSearchC = (valor) => {
     setSearchC(valor)
   }
-  !searchA && !searchC && !searchN?
-  Resultado = data
-  :
-  Resultado = data.filter((b)=>
-  b.name.toLowerCase().includes(searchN) &&
-  b.lastName.toLowerCase().includes(searchA) &&
-  b.dni.toLowerCase().includes(searchC) 
+  !searchA && !searchC && !searchN ?
+    Resultado = data
+    :
+    Resultado = data.filter((b) =>
+      b.name.toLowerCase().includes(searchN) &&
+      b.lastName.toLowerCase().includes(searchA) &&
+      b.dni.toLowerCase().includes(searchC)
 
-  )
+    )
   useEffect(() => { CargarDatos() }, [])
   return (
     <div className='min-h-screen'>
@@ -129,7 +141,7 @@ const Personas = () => {
         Agregar Persona
         <Icon path={mdiAccountPlus} className='inline ml-1 mb-1' size={0.8} />
       </Button>
-      <SearchPerson onSearchA={onSearchA} onSearchC={onSearchC} onSearchN={onSearchN}/>
+      <SearchPerson onSearchA={onSearchA} onSearchC={onSearchC} onSearchN={onSearchN} />
       <CardsPerson vacio={vacio} data={Resultado} OpenModalGrupoFamiliar={OpenModalGrupoFamiliar} Editar={Editar} Eliminar={Eliminar} />
     </div>
   );

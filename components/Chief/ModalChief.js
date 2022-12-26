@@ -1,20 +1,23 @@
-import { Modal, Form} from 'antd'
+import { Modal, Form } from 'antd'
 import { useState, useEffect } from 'react'
 import FormChief from './FormChief';
-
+import { useRouter } from 'next/router';
 const ModalJefeFamiliar = ({ open, onCancel, finish, item }) => {
+    const router = useRouter()
     const [form] = Form.useForm()
     const [data, setData] = useState(null)
     const [person, setPerson] = useState('')
     const [home, setHome] = useState('')
 
     const onOk = () => {
-            form.validateFields().then((values) => {
-                finish({ ...values, 
-                    person: person,
-                     home: (item == null? home :  item.id) })
-                setData(null)
+        form.validateFields().then((values) => {
+            finish({
+                ...values,
+                person: person,
+                home: (router.pathname == '/user/Home' ? item.id : home  )
             })
+            setData(null)
+        })
 
     }
     const onChange = (valor) => {
@@ -28,12 +31,19 @@ const ModalJefeFamiliar = ({ open, onCancel, finish, item }) => {
     }
 
     useEffect(() => {
-        setData(null)
-        form.resetFields()
+        if (item == null) {
+            setData(null)
+            form.resetFields()
+        }
+        else {
+            setData({ ...item })
+            form.setFieldsValue({ ...item })
+        }
+
     }, [open])
 
     return (
-        <Modal title='Jefe Familiar' onOk={onOk} open={open} onCancel={onCancel}>
+        <Modal title={item == null ? 'Crear nuevo Jefe Familiar' : 'Editar Jefe Familiar'} onOk={onOk} open={open} onCancel={onCancel}>
             <FormChief onChange={onChange} form={form} data={data} item={item} personId={personId} homeId={homeId} />
         </Modal>
     );

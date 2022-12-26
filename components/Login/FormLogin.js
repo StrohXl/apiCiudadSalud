@@ -1,71 +1,71 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, Row, Col, Carousel } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import Icon from '@mdi/react';
-import { mdiLogin } from '@mdi/js';
 const { Title } = Typography
 const FormLogin = ({ onFinish }) => {
     const [form] = Form.useForm()
     return (
-        <div className='w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6'>
-            <div className='h-40 rounded-tl-xl rounded-tr-xl bg-slate-800 flex items-center justify-center'>
-                <Title ><span className='text-white font-'>Ciudad Salud</span></Title>
+       
+            <div className='w-screen h-screen flex flex-col items-center bg-gradient-to-b from-slate-900 to-white justify-center '>
+                <h1 className='text-4xl md:text-7xl  mb-3 font-serif text-white '>Ciudad Salud</h1>
+                <h1 className='text-lg xl:text-2xl  font-serif text-white '>Iniciar Sesion</h1>
+
+                <Form
+                    form={form}
+                    className='pt-20 w-4/6 lg:w-3/6 xl:w-2/6 flex flex-col gap-5 '
+                    name="normal_login"
+                    layout='vertical'
+                    initialValues={{
+                        remember: true,
+                    }}
+                    onFinish={onFinish}
+                >
+                    <Form.Item
+                        label={(<span className=' mb-2 text-white text-2xl'>Correo Electornico</span>)}
+                        name="email"
+                        rules={[
+                            {
+                                type: 'email',
+                             
+                                message: 'Porfavor escriba su Correo',
+                            },
+                        ]}
+                    >
+
+                        <Input className="text-xl" prefix={<UserOutlined />} placeholder="Escriba su Correo Electronico" />
+                    </Form.Item>
+                    <Form.Item
+                        label={(<span className=' mb-2 text-white text-2xl'>Contrasena</span>)}
+                        name="password"
+                        rules={[
+                            {
+                             
+                                
+                                message: 'Porfavor escriba su Contrasena!',
+                            },
+                        ]}
+                    >
+                        <Input
+                            className="text-xl"
+                            prefix={<LockOutlined/>}
+                            placeholder="Escriba su Contrasena"
+                            type='password'
+                        />
+                    </Form.Item>
+                    <Form.Item className='text-center xl:text-start mt-6'  >
+                        <Button type='primary' className='w-full h-12  bg-white text-2xl leading-none'
+
+
+                            htmlType="submit" >
+
+
+                            Iniciar
+                        </Button>
+                        <div className='border-b-white border-b-2 mt-12'></div>
+                    </Form.Item>
+                </Form>
             </div>
-            <Form
-                form={form}
-                className='py-12 px-3 bg-white rounded-bl-xl rounded-br-xl'
-                name="normal_login"
-                layout='vertical'
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-            >
-                <Form.Item
-                    name="email"
-                    label='Correo del Usuario'
-                    rules={[
-                        {
-                            type: 'email',
-                            required: true,
-                            message: 'Please input your Email!',
-                        },
-                    ]}
-                >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Correo" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    label='Contrasena del Usuario'
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Password!',
-                        },
-                    ]}
-                >
-                    <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="Contrasena"
-                    />
-                </Form.Item>
 
-                <Form.Item>
-                    <Button className='bg-slate-800 w-full hover:bg-white ' type="primary" htmlType="submit" >
 
-                        <Icon
-                            className='inline mr-2'
-                            vertical
-                            title="User Profile"
-                            path={mdiLogin}
-                            color='white'
-                            size={1} />
-                        Ingresar
-                    </Button>
-
-                </Form.Item>
-            </Form>
-        </div>
 
     );
 };

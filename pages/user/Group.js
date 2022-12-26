@@ -2,51 +2,68 @@ import { Button} from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import ModalGroup from '../../components/Group/ModalGroup';
+import DrawerGroup from '../../components/Group/DrawerGroup';
 import Icon from '@mdi/react';
 import {mdiAccountGroup} from '@mdi/js'
 import CardsGroup from '../../components/Group/CardsGroup';
 import SearchGroup from '../../components/Group/SearchGroup';
+import { createGroupErrorNotification, createGroupNotification, editGroupNotification } from '../../components/Group/NotificationsGroup';
 const Grupo = () => {
   const [data, setData] = useState([])
   const [searchN, setSearchN] = useState([])
   const [searchNC, setSearchNC] = useState([])
   const [searchR, setSearchR] = useState([])
-  const [open, setOpen] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
   const [item, setItem] = useState(null)
   const [vacio, setVacio] = useState(false)
   const router = useRouter()
   let Resultado = []
-  const Open = () => {
+  const OpenDrawer = () => {
     setItem(null)
-    setOpen(true)
+    setOpenDrawer(true)
+
+  }
+  const Editar = (index) => {
+    setItem(data[index])
+    setOpenDrawer(true)
 
   }
   const Cancel = async () => {
-    setOpen(false)
+    setOpenDrawer(false)
     setItem(null)
   }
   const Guardar = async (datos) => {
+  const person = data.filter((b)=>
+  b.person.id == datos.person
+  )
+  if(person.length != 0){
+   createGroupErrorNotification()
+  }
+  else{
     if (item === null) {
       try {
         await axios.post('http://localhost:8080/family-group', datos)
         CargarDatos()
-        setOpen(false)
+        setOpenDrawer(false)
         setItem(null)
+        createGroupNotification()
       } catch (error) {
         console.log(error)
       }
     }
     else {
       try {
-        await axios.put(`http://localhost:8080/home/${item.id}`, datos)
+        await axios.put(`http://localhost:8080/family-group/${item.id}`, datos)
         CargarDatos()
-        setOpen(false)
+        editGroupNotification()
+        setOpenDrawer(false)
         setItem(null)
       } catch (error) {
         console.log(error)
       }
     }
+  }
+console.log(datos)
 
   }
   const Eliminar = async (id) => {
@@ -93,14 +110,14 @@ const Grupo = () => {
   useEffect(() => { CargarDatos() }, [])
   return (
     <div className='min-h-screen'>
-      <ModalGroup open={open} onCancel={Cancel} finish={Guardar} item={null} />
-      <Button className='mt-6 ml-6' onClick={Open}>
+      <DrawerGroup open={openDrawer} onCancel={Cancel} finish={Guardar} item={item} />
+      <Button className='mt-6 ml-6' onClick={OpenDrawer}>
         Agregar Grupo familiar
         <Icon path={mdiAccountGroup} className='inline ml-1 mb-1' size={0.8} />  
         
         </Button>
         <SearchGroup onSearchR={onSearchR} onSearchN={onSearchN} onSearchNC={onSearchNC}/>
-        <CardsGroup vacio={vacio} data={Resultado} Eliminar={Eliminar} />
+        <CardsGroup vacio={vacio} data={Resultado} Eliminar={Eliminar} Editar={Editar} />
 
     </div>
   );

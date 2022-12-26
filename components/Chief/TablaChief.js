@@ -4,16 +4,16 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
 
-const TablaChief = ({chiefId}) => {
+const TablaChief = ({ chiefId }) => {
     const [data, setData] = useState(null)
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
-    const rowSelection ={
+    const rowSelection = {
         type: 'radio',
-        onSelect: (record)=>{
+        onSelect: (record) => {
             chiefId(record)
-          
+
         }
 
     }
@@ -22,7 +22,7 @@ const TablaChief = ({chiefId}) => {
     }
     const CargarDatos = async () => {
         const auxdata = await axios.get('http://localhost:8080/family-chief')
-        auxdata.data.map((item)=>{
+        auxdata.data.map((item) => {
             item.key = item.id
             item.name = item.person.name
             item.n_home = item.home.n_home
@@ -42,6 +42,7 @@ const TablaChief = ({chiefId}) => {
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div
+             
                 style={{
                     padding: 8,
                 }}
@@ -60,29 +61,25 @@ const TablaChief = ({chiefId}) => {
                 />
                 <Space>
                     <Button
-                        className='bg-blue-500'
+                    
                         type="primary"
                         onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
+                        icon={(<span className='pr-1'><SearchOutlined /></span>)}
+                        className='text-lg leading-none'
+                        
                     >
                         Buscar
                     </Button>
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
+                        className='text-lg leading-none'
+                        
                     >
                         Resetear
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none'
                         onClick={() => {
                             confirm({
                                 closeDropdown: false,
@@ -95,7 +92,7 @@ const TablaChief = ({chiefId}) => {
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none'
                         onClick={() => {
                             close();
                         }}
@@ -107,6 +104,7 @@ const TablaChief = ({chiefId}) => {
         ),
         filterIcon: (filtered) => (
             <SearchOutlined
+                className='text-lg'
                 style={{
                     color: filtered ? '#1890ff' : undefined,
                 }}
@@ -154,8 +152,7 @@ const TablaChief = ({chiefId}) => {
             dataIndex: 'numberPhone',
             key: 'numberPhone',
             ...getColumnSearchProps('numberPhone'),
-            sorter: (a, b) => a.numberPhone.length - b.numberPhone.length,
-            sortDirections: ['descend', 'ascend'],
+          
         },
     ];
     useEffect(() => {
@@ -163,7 +160,7 @@ const TablaChief = ({chiefId}) => {
     }, [])
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={pagination} rowSelection={rowSelection}/>
+            <Table columns={columns} dataSource={data} pagination={pagination} rowSelection={rowSelection} />
         </div>
 
     );

@@ -1,7 +1,9 @@
 import { Form, Input, Select,  } from 'antd'
 import TablaPersonas from '../Person/TablaPerson'
 import TablaHome from '../Home/TablaHome'
+import { useRouter } from 'next/router';
 const FormChief = ({onChange, form, data, item, personId, homeId}) => {
+    const router = useRouter()
     return (
         <Form layout='vertical' initialValues={data} form={form} onChange={onChange} >
         <Form.Item
@@ -43,7 +45,7 @@ const FormChief = ({onChange, form, data, item, personId, homeId}) => {
         >
             <TablaPersonas personId={personId} item={item} />
         </Form.Item>
-        {item == null ? (
+        {router.pathname == '/user/Chief' ? (
             <Form.Item 
             label="Seleccione su casa"
 

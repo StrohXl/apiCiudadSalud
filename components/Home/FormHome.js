@@ -1,63 +1,6 @@
-import { Form, Select, InputNumber  } from "antd";
+import { Form,  InputNumber, Input  } from "antd";
 const FormHome = ({data,form,onChange}) => {
-    const optionsStreet = [
-        {
-            value: '1',
-            label: 'Calle 1'
-        },
-        {
-            value: '2',
-            label: 'Calle 2'
-        },
-        {
-            value: '3',
-            label: 'Calle 3'
-        },
-        {
-            value: '4',
-            label: 'Calle 4'
-        },
-        {
-            value: '5',
-            label: 'Calle 5'
-        },
 
-    ]
-    const optionsSquare = [
-        {
-            value: 'A',
-            label: 'A'
-        },
-        {
-            value: 'B',
-            label: 'B'
-        },
-        {
-            value: 'C',
-            label: 'C'
-        },
-        {
-            value: 'D',
-            label: 'D'
-        },
-        {
-            value: 'E',
-            label: 'E'
-        },
-        {
-            value: 'F',
-            label: 'F'
-        },
-        {
-            value: 'G',
-            label: 'G'
-        },
-        {
-            value: 'H',
-            label: 'H'
-        },
-
-    ]
     return (
         <Form layout='vertical' initialValues={data} form={form} onChange={onChange} >
                 <Form.Item
@@ -118,31 +61,25 @@ const FormHome = ({data,form,onChange}) => {
                     rules={[
                         {
                             required: true,
-                            message: 'Porfavor seleccione una calle'
+                            message: 'Porfavor escriba la calle'
                         }
                     ]}
 
                 >
-                    <Select
-                        options={optionsStreet}
-
-                    />
+                    <Input/>
                 </Form.Item>
                 <Form.Item
                     name='square'
-                    label='Letra de la cuadra de la Casa'
+                    label='Cuadra de la Casa'
                     rules={[
                         {
                             required: true,
-                            message: 'Porfavor seleccione una letra'
+                            message: 'Porfavor escriba la cuadra de la casa'
                         }
                     ]}
 
                 >
-                    <Select
-                        options={optionsSquare}
-
-                    />
+                    <Input/>
                 </Form.Item>
             </Form>
     );

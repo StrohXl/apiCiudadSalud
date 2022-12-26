@@ -1,6 +1,6 @@
-import { Button, Row, Col, Card, Space } from 'antd';
+import { Button, Row, Col, Card, Popconfirm } from 'antd';
 
-const CardsChief = ({vacio, data, Eliminar}) => {
+const CardsChief = ({vacio, data, Eliminar, Editar}) => {
     return (
         <Row className='mt-6 flex justify-around'>
         {vacio ?
@@ -26,8 +26,17 @@ const CardsChief = ({vacio, data, Eliminar}) => {
                   <div>Casa: <span className='font-bold'>{item.home.n_home}</span></div>
                   <div>Numero de telefono: <span className='font-bold'>{item.numberPhone}</span></div>
                   <div>Estado: <span className='font-bold'>{item.property}</span></div>
-                  <div className='text-end'>
-                    <Button onClick={() => Eliminar(item.id)}>Eliminar</Button>
+                  <div className='flex justify-end gap-4'>
+                    <Button onClick={() => Editar(index)}>Editar</Button>
+                    <Popconfirm
+                      title='Estas seguro deseas Eliminar?'
+                      
+                      onConfirm={() => Eliminar(item.id)}
+                      okText='Eliminar'
+                      cancelText='Cancelar'
+                      >
+                      <Button >Eliminar</Button>
+                      </Popconfirm>
                   </div>
                 </Card>
               </Col>

@@ -4,6 +4,7 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import axios from 'axios';
 import ModalPersona from './ModalPerson';
+import { personCreateNotification } from './NotificationPerson';
 
 const TablaPersonas = ({personId, item}) => {
     const [data, setData] = useState(null)
@@ -39,7 +40,8 @@ const TablaPersonas = ({personId, item}) => {
         try {
             await axios.post('http://localhost:8080/person', datos)
             CargarDatos()
-         
+            setOpenModal(false)
+            personCreateNotification()
         } catch (error) {
             console.log(error)
         }
@@ -74,29 +76,25 @@ const TablaPersonas = ({personId, item}) => {
                 />
                 <Space>
                     <Button
-                        className='bg-blue-500'
+                     
                         type="primary"
                         onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
+                        icon={(<span className=' pr-1'><SearchOutlined /></span>)}
+                        className='text-lg leading-none'
+                       
                     >
                         Buscar
                     </Button>
                     <Button
                         onClick={() => clearFilters && handleReset(clearFilters)}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
+                        className='text-lg leading-none'
+                       
                     >
                         Resetear
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none'
                         onClick={() => {
                             confirm({
                                 closeDropdown: false,
@@ -109,7 +107,7 @@ const TablaPersonas = ({personId, item}) => {
                     </Button>
                     <Button
                         type="link"
-                        size="small"
+                        className='text-lg leading-none'
                         onClick={() => {
                             close();
                         }}
@@ -121,6 +119,7 @@ const TablaPersonas = ({personId, item}) => {
         ),
         filterIcon: (filtered) => (
             <SearchOutlined
+                className='text-xl'
                 style={{
                     color: filtered ? '#1890ff' : undefined,
                 }}
@@ -160,7 +159,7 @@ const TablaPersonas = ({personId, item}) => {
             title: 'Apellido',
             dataIndex: 'lastName',
             key: 'lastName',
-            width: '20%',
+            width: '30%',
             ...getColumnSearchProps('lastName'),
         },
         {
@@ -168,8 +167,7 @@ const TablaPersonas = ({personId, item}) => {
             dataIndex: 'dni',
             key: 'dni',
             ...getColumnSearchProps('dni'),
-            sorter: (a, b) => a.dni.length - b.dni.length,
-            sortDirections: ['descend', 'ascend'],
+       
         },
     ];
     useEffect(() => {

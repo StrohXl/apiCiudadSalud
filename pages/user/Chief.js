@@ -2,37 +2,67 @@ import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import ModalJefe from '../../components/Chief/ModalChief';
 import CardsChief from '../../components/Chief/CardsChief';
 import Icon from '@mdi/react';
 import { mdiAccountGroupOutline } from '@mdi/js'
 import SearchChief from '../../components/Chief/SearchChief';
-import { createChiefNotification } from '../../components/Chief/NotificationsChief';
+import { createChiefNotification, createChiefErrorNotification } from '../../components/Chief/NotificationsChief';
+import DrawerChief from '../../components/Chief/DrawerChief';
 const Jefes = () => {
   const [data, setData] = useState([])
+  const [item, setItem] = useState(null)
   const [searchN, setSearchN] = useState([])
   const [searchNC, setSearchNC] = useState([])
   const [searchT, setSearchT] = useState([])
   const [open, setOpen] = useState(false)
   const [vacio, setVacio] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
   const router = useRouter()
   let Resultado = []
-  const Open = () => {
-    setOpen(true)
+  const OpenDrawer = () => {
+    setItem(null)
+    setOpenDrawer(true)
   }
-  const Cancel = async () => {
-    setOpen(false)
+  const CloseDrawer = async () => {
+    setOpenDrawer(false)
   }
   const Guardar = async (datos) => {
-    try {
-      await axios.post('http://localhost:8080/family-chief', datos)
-      CargarDatos()
-      createChiefNotification()
-      setOpen(false)
-    } catch (error) {
-      console.log(error)
+    console.log(datos)
+    console.log(item)
+    if (item == null) {
+      const filtrado = data.filter((b) => b.person.id == datos.person)
+      if (filtrado != 0) {
+        createChiefErrorNotification()
+      }
+      else {
+        try {
+          await axios.post('http://localhost:8080/family-chief', datos)
+          createChiefNotification()
+          CargarDatos()
+          setOpen(false)
+          setOpenDrawer(false)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+
+    }
+    else {
+      try {
+        await axios.put(`http://localhost:8080/family-chief/${item.id}`, datos)
+        createChiefNotification()
+      } catch (error) {
+
+        console.log(error)
+      }
     }
 
+  }
+  const Editar = async (index) => {
+    console.log(data[index])
+    setOpen(true)
+    setItem(data[index])
   }
   const Eliminar = async (id) => {
     try {
@@ -79,13 +109,13 @@ const Jefes = () => {
   useEffect(() => { CargarDatos() }, [])
   return (
     <div className='min-h-screen'>
-      <ModalJefe open={open} onCancel={Cancel} finish={Guardar} item={null} />
-      <Button className='mt-6 ml-6' onClick={Open}>
+      <Button className='mt-6 ml-6' onClick={OpenDrawer}>
         Agregar Jefe familiar
         <Icon path={mdiAccountGroupOutline} className='inline ml-1 mb-1' size={0.8} />
       </Button>
       <SearchChief onSearchN={onSearchN} onSearchNC={onSearchNC} onSearchT={onSearchT} />
-      <CardsChief vacio={vacio} data={Resultado} Eliminar={Eliminar} />
+      <CardsChief vacio={vacio} data={Resultado} Eliminar={Eliminar} Editar={Editar} />
+      <DrawerChief onClose={CloseDrawer} open={openDrawer} finish={Guardar} item={item} />
 
     </div>
   );

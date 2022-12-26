@@ -3,7 +3,7 @@ const { Search } = Input
 const { Title } = Typography
 const SearchChief = ({onSearchN, onSearchNC, onSearchT}) => {
     return (
-        <div className="flex gap-20 mx-50 mt-10 justify-center">
+        <div className="flex gap-10 px-12 mt-10 justify-center">
 
 
         <div className="w-96 text-center">

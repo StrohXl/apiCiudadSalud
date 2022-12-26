@@ -37,7 +37,7 @@ const SearchGroup = ({ onSearchN, onSearchNC, onSearchR }) => {
         },
     ]
     return (
-        <div className="flex gap-20 mx-50 mt-10 justify-center">
+        <div className="flex gap-10 px-12 mt-10 justify-center">
             <div className="w-96 text-center">
                 <Title level={3}>Nombre:</Title>
                 <Search placeholder="Escriba el nombre de la persona" allowClear onSearch={onSearchN} />
@@ -48,7 +48,7 @@ const SearchGroup = ({ onSearchN, onSearchNC, onSearchR }) => {
             </div>
             <div className="w-96 text-center">
                 <Title level={3}>Relacion:</Title>
-                <Select className="w-96" onChange={onSearchR} defaultValue={''} options={options} />
+                <Select className="w-full" onChange={onSearchR} defaultValue={''} options={options} />
 
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Button, Row, Col, Card } from 'antd';
+import { Button, Row, Col, Card, Popconfirm } from 'antd';
 
 const CardsPerson = ({ vacio, data, OpenModalGrupoFamiliar, Editar, Eliminar }) => {
   return (
@@ -29,7 +29,15 @@ const CardsPerson = ({ vacio, data, OpenModalGrupoFamiliar, Editar, Eliminar }) 
                     </div>
                     <div>
                       <Button onClick={() => Editar(index)} className='mr-3'>Editar</Button>
-                      <Button onClick={() => Eliminar(item.id)}>Eliminar</Button>
+                      <Popconfirm
+                      title='Estas seguro que deseas Eliminar?'
+                      
+                      onConfirm={() => Eliminar(item.id)}
+                      okText='Eliminar'
+                      cancelText='Cancelar'
+                      >
+                      <Button >Eliminar</Button>
+                      </Popconfirm>
                     </div>
                   </div>
                 </Card>
