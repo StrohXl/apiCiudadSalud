@@ -2,7 +2,9 @@ import { Button, Drawer, Form, Input, Select } from "antd";
 import TablaHome from "../Home/TablaHome";
 import { useState, useEffect } from "react";
 import TablaPersonas from "../Person/TablaPerson";
+import { useRouter } from "next/router";
 const DrawerChief = ({ item, onClose, open, finish }) => {
+    const router = useRouter()
     const options = [
         {
             label: 'Propietario',
